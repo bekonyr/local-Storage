@@ -1,3 +1,6 @@
+// id: task.length ? task[task.length - 1].id + 1 : 1,
+
+
 // setItem("key", "value")       – ачкыч/баа жупту сактоо.
 // getItem("key")                – ачкыч менен маанини алыңыз.
 // removeItem("key")             – мааниси менен ачкычты алып салыңыз.
@@ -29,10 +32,9 @@ input.addEventListener('keydown', (e) => {
 
 function addTask() {
 	if (input.value.trim() === "") {
-		let ae = (err.innerHTML = "404");
+		let ae = err.innerHTML = "404";
 
 		err.style.color = "red";
-
 		// localStorage.setItem("task", JSON.stringify(ae ))
 	} else {
 		const task = JSON.parse(localStorage.getItem("task")) || [];
@@ -58,42 +60,41 @@ function view() {
 	const task = JSON.parse(localStorage.getItem("task")) || [];
 	task.map((el) => {
 		ul.innerHTML += `<li class="list-group-item d-flex align-items-center justify-content-between">
-				<span class='${el.isDone ? "line" : ""}'>
-               
-                    <input type='checkbox'  ${
-											el.isDone ? "chacked" : ""
-										} class="check">
-                        ${el.title}
-                </span>
-                <buuton class="del-btn btn btn-danger">DELETE</buuton>
-			</li>`;
+        <span class="${el.isDone ? "line" : ""}">
+          <input type="checkbox" ${el.isDone ? "checked" : ""} class="check">
+          ${el.title}
+        </span>
+     <button class="del-btn btn btn-danger">Delete</button>
+</li>`;
 	});
 	delBtn();
-	checkBox();
+	checkbox();
 }
+
 view();
+
 
 function delBtn() {
 	let task = JSON.parse(localStorage.getItem("task")) || [];
-	const buttons = document.querySelector(".del-btn");
+	const buttons = document.querySelectorAll(".del-btn");
 	buttons.forEach((btn, idx) => {
 		btn.addEventListener("click", () => {
 			task = task.filter((el, index) => {
 				return index !== idx;
 			});
-			localStorage.setItem("task", JSON.stringify(task));
+			localStorage.setItem("task", JSON.stringify("task"));
 			view();
 		});
 	});
 }
 
-function checkBox() {
+function checkbox() {
 	let task = JSON.parse(localStorage.getItem("task")) || [];
 	const checkBoxes = document.querySelectorAll(".check");
 	checkBoxes.forEach((check, index) => {
 		check.addEventListener("click", () => {
-			task = task.map((el, ind) => {
-				if (ind === index) {
+			task = task.map((el, idx) => {
+				if (idx === index) {
 					return { ...el, isDone: !el.isDone };
 				} else {
 					return el;
